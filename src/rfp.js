@@ -28,12 +28,12 @@ module.exports = function(robot) {
 		  request(url + '?ql=' + baasquery , function(error,response,body){
 		  	var b = JSON.parse(body)
 		  	b.entities.forEach(function(e){
-		  		msg.respond('Question: ' + e.question)
-		  		msg.respond('Answer:' + e.answer)
+		  		msg.send('Question: ' + e.question)
+		  		msg.send('Answer:' + e.answer)
 		  	})
 		  })
 		} else  {
-			msg.respond("USAGE: rfp <search query>");  
+			msg.send("USAGE: rfp <search query>");  
 		}
 
     });
