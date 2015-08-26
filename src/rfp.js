@@ -37,7 +37,7 @@ module.exports = function(robot) {
 		  	var b = JSON.parse(body)
 		  	b.entities.forEach(function(e){
 		  		msg.send('Question: ' + e.question)
-		  		msg.send('Answer:' + e.answer)
+		  		msg.send('Answer:```' + e.answer + '```')
 		  	})
 		  })
 		} else  {
