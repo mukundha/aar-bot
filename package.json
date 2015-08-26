@@ -1,6 +1,6 @@
 {
   "name": "aarbot",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "private": true,
   "author": "mukundha@apigee.com <mukundha@apigee.com>",
   "description": "Searches Apigee Answer Repository for answers",

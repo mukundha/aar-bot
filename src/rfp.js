@@ -57,7 +57,7 @@ module.exports = function(robot) {
 		}
     })
 
-    robot.respond(/rfpdebug /i, function(msg){ 
+    robot.respond(/rfpdebug/i, function(msg){ 
       msg.send(JSON.stringify(creds))
       msg.send(jwt)
     })    
