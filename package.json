@@ -1,11 +1,12 @@
 {
   "name": "aarbot",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "author": "mukundha@apigee.com <mukundha@apigee.com>",
   "description": "Searches Apigee Answer Repository for answers",
   "dependencies": {
-   "request":"*"
+   "request":"*",
+   "google-oauth-jwt": "*"
   },
   "engines": {
     "node": "0.10.x"

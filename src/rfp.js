@@ -13,19 +13,26 @@
 // Author:
 //   Mukundha Madhavan <mukundha@apigee.com>
 
-
+var jwt ;
 var request = require('request')
+var googleAuth = require('google-oauth-jwt');
+var privateKey=JSON.parse(process.env.GOOGLE_KEY).private_key
+var email = process.env.GOOGLE_EMAIL
+
 module.exports = function(robot) {
     robot.respond(/rfp (.*)/i, function(msg){           	
         var url = process.env.RFP_URL
         var ql = msg.match[1]
-		if(ql != null) {
+		if(ql && jwt) {
 		  var baasquery = 'select * where ';
 		  var qlsplits = ql.split(' ');
 		  baasquery = baasquery + addSplitPartsToQuery_searchString(qlsplits);
-		  console.log(baasquery)  
-		  //msg.reply(baasquery);  
-		  request(url + '?ql=' + baasquery , function(error,response,body){
+		  request({
+        url:url + '?ql=' + baasquery , 
+        headers:{
+          Authorization: 'BearerToken ' + jwt
+          }
+      },function(error,response,body){
 		  	var b = JSON.parse(body)
 		  	b.entities.forEach(function(e){
 		  		msg.send('Question: ' + e.question)
@@ -33,9 +40,11 @@ module.exports = function(robot) {
 		  	})
 		  })
 		} else  {
-			msg.send("USAGE: rfp <search query>");  
+			if(!jwt)
+        msg.send('This is certainly not a user error!, pls try again later - @mukundha @jeremybrown')
+      else
+        msg.send("USAGE: rfp <search query>");  
 		}
-
     });
 }
 
@@ -65,7 +74,16 @@ function addSplitPartsToQuery_tags(splits){
   return queryStrPartial;
 }
 
-
+getJWT()
+function getJWT(){
+  googleAuth.encodeJWT({
+    email: email,
+    key: privateKey,
+    scopes: ['https://www.googleapis.com/auth/plus.login']
+  }, function (err, token) {
+     jwt = token     
+  })
+}
 
 
   
