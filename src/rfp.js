@@ -8,8 +8,11 @@
 //   None
 //
 // Commands:
-//   hubot rfp <keyword>
+//   hubot rfp <keyword> - searches for answers
 //
+// Author:
+//   Mukundha Madhavan <mukundha@apigee.com>
+
 
 var request = require('request')
 module.exports = function(robot) {
