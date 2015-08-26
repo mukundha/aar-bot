@@ -16,8 +16,9 @@
 var jwt ;
 var request = require('request')
 var googleAuth = require('google-oauth-jwt');
-var privateKey=JSON.parse(process.env.GOOGLE_KEY).private_key
-var email = process.env.GOOGLE_EMAIL
+var creds = JSON.parse(process.env.ARR_GOOGLE_KEY)
+var privateKey=creds.private_key
+var email = creds.client_email
 
 module.exports = function(robot) {
     robot.respond(/rfp (.*)/i, function(msg){           	
