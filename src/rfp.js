@@ -15,8 +15,12 @@
 
 var jwt ;
 var request = require('request')
+var fs = require('fs')
 var googleAuth = require('google-oauth-jwt');
-var creds = JSON.parse(process.env.ARR_GOOGLE_KEY)
+
+var creds = fs.readFileSync(process.env.AAR_CONFIG_FILE)
+creds = JSON.parse(creds)
+
 var privateKey=creds.private_key
 var email = creds.client_email
 
@@ -81,7 +85,7 @@ function getJWT(){
     email: email,
     key: privateKey,
     scopes: ['https://www.googleapis.com/auth/plus.login']
-  }, function (err, token) {
+  }, function (err, token) {    
      jwt = token     
   })
 }
