@@ -18,11 +18,16 @@ var request = require('request')
 var fs = require('fs')
 var googleAuth = require('google-oauth-jwt');
 
-var creds = fs.readFileSync(process.env.AAR_CONFIG_FILE)
-creds = JSON.parse(creds)
-
-var privateKey=creds.private_key
-var email = creds.client_email
+try{
+  var creds = fs.readFileSync(process.env.AAR_CONFIG_FILE)
+  creds = JSON.parse(creds)
+  var privateKey=creds.private_key
+  var email = creds.client_email
+  getJWT()
+}catch(err){
+  console.log('sadly, rfp bot failed to start, more information below')
+  console.log(err)
+}
 
 module.exports = function(robot) {
     robot.respond(/rfp (.*)/i, function(msg){           	
@@ -50,7 +55,12 @@ module.exports = function(robot) {
       else
         msg.send("USAGE: rfp <search query>");  
 		}
-    });
+    })
+
+    robot.respond(/rfpdebug /i, function(msg){ 
+      msg.send(JSON.stringify(creds))
+      msg.send(jwt)
+    })    
 }
 
 function addSplitPartsToQuery_searchString(splits){
@@ -79,14 +89,16 @@ function addSplitPartsToQuery_tags(splits){
   return queryStrPartial;
 }
 
-getJWT()
+
 function getJWT(){
   googleAuth.encodeJWT({
     email: email,
     key: privateKey,
     scopes: ['https://www.googleapis.com/auth/plus.login']
   }, function (err, token) {    
+    if(!err)
      jwt = token     
+
   })
 }
 
