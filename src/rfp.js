@@ -5,7 +5,7 @@
 //   None
 //
 // Configuration:
-//   None
+//   AAR_CONFIG_FILE - google service account config file
 //
 // Commands:
 //   hubot rfp <keyword> - searches for answers
