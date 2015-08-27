@@ -19,6 +19,7 @@ var fs = require('fs')
 var googleAuth = require('google-oauth-jwt');
 
 try{
+  console.log(process.env.AAR_CONFIG_FILE)
   var creds = fs.readFileSync(process.env.AAR_CONFIG_FILE)
   creds = JSON.parse(creds)
   var privateKey=creds.private_key
